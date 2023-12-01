@@ -17,10 +17,10 @@ public class RepositoryTest {
 
     @BeforeEach
     void setUp() {
-        var task1 = new TaskModel("task 1");
-        var task2 = new TaskModel("task 2");
-        var task3 = new TaskModel("task 3");
-        var task4 = new TaskModel("description 4");
+        var task1 = new TaskModel("task 1", false);
+        var task2 = new TaskModel("task 2", true);
+        var task3 = new TaskModel("task 3", true);
+        var task4 = new TaskModel("description 4", true);
 
         repository.save(task1);
         repository.save(task2);
@@ -59,5 +59,21 @@ public class RepositoryTest {
                         "the description")
                 .hasSize(3)
                 .hasOnlyElementsOfType(TaskModel.class);
+    }
+
+    @Test
+    void testFindAllByStatus(){
+        assertThat(repository.findAllByIsCompleted(false))
+                .as("Task Repository findAllByIsCompleted method should return only the elements that match")
+                .hasSize(1)
+                .hasOnlyElementsOfType(TaskModel.class)
+                .element(0)
+                .hasFieldOrPropertyWithValue("isCompleted", false);
+
+        assertThat(repository.findAllByIsCompleted(true))
+                .as("Task Repository findAllByIsCompleted method should return only the elements that match")
+                .hasSize(3)
+                .hasOnlyElementsOfType(TaskModel.class)
+                .allMatch(TaskModel::isCompleted);
     }
 }
