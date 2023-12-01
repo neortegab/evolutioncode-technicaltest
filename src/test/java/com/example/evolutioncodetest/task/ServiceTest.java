@@ -1,17 +1,16 @@
 package com.example.evolutioncodetest.task;
 
 
+import org.h2.util.Task;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.client.RestClientResponseException;
 
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -36,9 +35,6 @@ public class ServiceTest {
 
     @Test
     void testFindAll() {
-        Mockito.mock(TaskModel.class);
-        Mockito.mock(repository.getClass());
-
         Mockito.when(repository.findAll()).thenReturn(new ArrayList<TaskModel>());
         assertThat(service.getAllTasks())
                 .as("Get all tasks should return an empty list when there is no tasks added")
@@ -65,9 +61,6 @@ public class ServiceTest {
 
     @Test
     void testFindById() {
-        Mockito.mock(TaskModel.class);
-        Mockito.mock(repository.getClass());
-
         var id = UUID.randomUUID();
 
         Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
@@ -84,18 +77,19 @@ public class ServiceTest {
     }
 
     @Test
-    void testFindByDescription() {
-
-    }
-
-    @Test
-    void testFindByStatus() {
-
-    }
-
-    @Test
     void testCreate() {
+        var randomId = UUID.randomUUID();
+        Mockito.when(repository.findById(randomId)).thenReturn(Optional.of(new TaskModel()));
+        assertThatThrownBy(() -> service.createTask(new TaskModel(randomId, "desc", false)))
+                .as("Create task should throw a RestClientResponseException if the ID already exists")
+                .isInstanceOf(RestClientResponseException.class);
 
+        Mockito.when(repository.findById(randomId)).thenReturn(Optional.empty());
+        var createdTask = new TaskModel();
+        Mockito.when(repository.save(createdTask)).thenReturn(createdTask);
+        assertThat(service.createTask(createdTask))
+                .as("Create task should create the task when task id not found")
+                .isNotNull().isInstanceOf(TaskModel.class).isEqualTo(createdTask);
     }
 
     @Test
