@@ -35,7 +35,7 @@ public class RepositoryTest {
         assertThat(repository.findByDescription("task"))
                 .as("Task Repository findByDescription method should return one element that matches the description")
                 .hasSize(1)
-                .hasExactlyElementsOfType(TaskModel.class)
+                .hasOnlyElementsOfType(TaskModel.class)
                 .element(0)
                 .hasFieldOrPropertyWithValue("description", "task 1");
     }
@@ -57,6 +57,6 @@ public class RepositoryTest {
         assertThat(repository.findByDescription("task"))
                 .as("Task Repository findByDescription method should return only elements that matches the description")
                 .hasSize(3)
-                .hasExactlyElementsOfType(TaskModel.class);
+                .hasOnlyElementsOfType(TaskModel.class);
     }
 }
