@@ -25,4 +25,10 @@ public class TaskModel {
     @Nonnull
     private boolean isCompleted = false;
 
+    public TaskModel(String description){
+        this.id = UUID.randomUUID();
+        this.description = description;
+        this.isCompleted = false;
+    }
+
 }
