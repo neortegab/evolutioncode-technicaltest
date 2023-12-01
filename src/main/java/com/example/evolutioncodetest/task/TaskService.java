@@ -28,6 +28,10 @@ public class TaskService {
         return repository.findByDescriptionContains(description);
     }
 
+    public List<TaskModel> findByStatus(boolean isCompleted){
+        return repository.findAllByIsCompleted(isCompleted);
+    }
+
     public TaskModel createTask(TaskModel task){
         return repository.save(task);
     }
