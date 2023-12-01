@@ -1,16 +1,16 @@
 package com.example.evolutioncodetest.task;
 
 import jakarta.annotation.Nonnull;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component
+@Entity
 @Data
 @NoArgsConstructor
 public class TaskModel {
