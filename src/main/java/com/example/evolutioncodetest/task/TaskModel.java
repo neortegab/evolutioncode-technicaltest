@@ -31,4 +31,9 @@ public class TaskModel {
         this.isCompleted = false;
     }
 
+    public TaskModel(String description, boolean isCompleted){
+        this.description = description;
+        this.isCompleted = isCompleted;
+    }
+
 }
