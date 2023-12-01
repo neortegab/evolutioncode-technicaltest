@@ -9,8 +9,12 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ServiceTest {
 
@@ -61,7 +65,22 @@ public class ServiceTest {
 
     @Test
     void testFindById() {
+        Mockito.mock(TaskModel.class);
+        Mockito.mock(repository.getClass());
 
+        var id = UUID.randomUUID();
+
+        Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> service.getTaskById(id))
+                .as("Service getById should throw an exception when the id doesn't exists")
+                .isInstanceOf(NoSuchElementException.class);
+
+        Mockito.when(repository.findById(id)).thenReturn(Optional.of(new TaskModel(id, "mock task", false)));
+        assertThat(service.getTaskById(id))
+                .as("Service getById should return a not null Task Model with the specified id")
+                .isNotNull()
+                .isInstanceOf(TaskModel.class)
+                .hasFieldOrPropertyWithValue("id", id);
     }
 
     @Test
