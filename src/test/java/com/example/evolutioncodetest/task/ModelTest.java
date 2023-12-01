@@ -17,8 +17,8 @@ public class ModelTest {
                 .as("Task model should have the property \"description\"")
                 .hasDeclaredFields("description");
         assertThat(TaskModel.class)
-                .as("Task model should have the property \"status\"")
-                .hasDeclaredFields("status");
+                .as("Task model should have the property \"isCompleted\"")
+                .hasDeclaredFields("isCompleted");
     }
 
     @Test
