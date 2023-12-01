@@ -1,7 +1,6 @@
 package com.example.evolutioncodetest.task;
 
 
-import org.h2.util.Task;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +13,7 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 
 public class ServiceTest {
 
@@ -112,6 +112,9 @@ public class ServiceTest {
 
     @Test
     void testDelete() {
-
+        Mockito.when(repository.findById(any())).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> service.deleteTaskById(UUID.randomUUID()))
+                .as("Delete method should throw a NoSuchElementException when the Task doesn't exists.")
+                .isInstanceOf(NoSuchElementException.class);
     }
 }
