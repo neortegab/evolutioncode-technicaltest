@@ -9,6 +9,6 @@ import java.util.UUID;
 @Repository
 public interface TaskRepository extends JpaRepository<TaskModel, UUID> {
 
-    List<TaskModel> findByDescription(String description);
+    List<TaskModel> findByDescriptionContains(String description);
 
 }
