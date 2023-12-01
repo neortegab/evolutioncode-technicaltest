@@ -32,7 +32,7 @@ public class ModelTest {
                 .as("Task model description should be of type String")
                 .isEqualTo("java.lang.String");
 
-        assertThat(TaskModel.class.getDeclaredField("status").getType().getTypeName())
+        assertThat(TaskModel.class.getDeclaredField("isCompleted").getType().getTypeName())
                 .as("Task model status should be of type boolean")
                 .isEqualTo("boolean");
     }
