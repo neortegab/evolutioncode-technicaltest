@@ -36,4 +36,10 @@ public class TaskModel {
         this.isCompleted = isCompleted;
     }
 
+    public TaskModel(UUID id, String description, boolean isCompleted){
+        this.id = id;
+        this.description = description;
+        this.isCompleted = isCompleted;
+    }
+
 }

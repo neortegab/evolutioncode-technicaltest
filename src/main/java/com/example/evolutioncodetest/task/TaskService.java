@@ -24,7 +24,11 @@ public class TaskService {
     }
 
     public TaskModel getTaskById(UUID id){
-        return repository.findById(id).orElseThrow();
+        var task = repository.findById(id);
+        if(task.isEmpty()){
+            throw new NoSuchElementException(String.format("The Task with the id %b doesn't exists", id));
+        }
+        return task.get();
     }
 
     public List<TaskModel> getTaskByDescription(String description){
