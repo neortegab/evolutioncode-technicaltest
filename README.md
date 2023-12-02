@@ -1,13 +1,10 @@
 # EvolutionCode Technical Test
-
----
-
+ 
 * [ENG](#table-of-contents) 
 * [ES](#tabla-de-contenido)
 
 ## Table Of Contents
 
----
 1. [Introduction](#introduction)
 2. [Project setup](#project-setup)
    1. [Consume from deploy.](#remote-deployment)
@@ -25,9 +22,7 @@
 
 
 ## Introduction
-
----
-
+ 
 This is a CRUD backend application developed in Spring Boot 3.2.0 with Java 21. This application allows to   
 manage tasks as in a TO-DO application. Since this is a CRUD application, Creating, Retrieving, Updating and Deleting tasks are among the application's scope and functional requirements.
 
@@ -40,9 +35,7 @@ Non-functional requirements for this application include the following:
 * Use of an in memory database for storage. In this case, H2 was selected.
 
 ## Project Setup
-
----
-
+ 
 This project is available to consume and review within the following options:
 * [Consume of endpoints using current remote deployment.](#remote-deployment)
 * [Consume of endpoints through local environment using Docker.](#docker)
@@ -117,8 +110,6 @@ the most suggested).
 in the background.
 
 ## API Documentation
-
----
 
 ### Home Path "/"
 
@@ -316,12 +307,9 @@ This endpoint will allow to create, retrieve, update or delete tasks.
     
     No body response is replied with this method unless it throws an error.
 
----
-
+ 
 ## Tabla De Contenido
-
----
-
+ 
 1. [Introducción](#introducción)
 2. [Configuración del proyecto](#configuración-del-proyecto)
     1. [Consumir servicios desde el despliegue.](#despliegue-remoto)
@@ -338,9 +326,7 @@ This endpoint will allow to create, retrieve, update or delete tasks.
       * [DELETE](#delete-tasksid-1)
 
 ## Introducción
-
----
-
+ 
 Esta es una aplicación con operaciones CRUD desarrollada en Spring Boot 3.2.0 con 
 Java 21. Esta aplicación permite administrar tareas donde se podrá ver su 
 descripción y si están completadas o no. Por lo tanto, su funcionalidad será la 
@@ -359,8 +345,6 @@ de desarrollo.
 selecciona la base de datos H2.
 
 ## Configuración del proyecto
-
----
 
 Este proyecto está disponible para usarse con las siguientes opciones:
 * [Consumo de los endpoints a través del entorno desplegado.](#despliegue-remoto)
@@ -440,8 +424,7 @@ desarrollo se encuentre en ejecución en la URL `http://localhost:8080/`.
 
 ## Documentacion API
 
----
-
+ 
 ### Ruta base "/"
 
 Esta ruta proveerá todas las subrutas disponibles en la aplicación.
