@@ -26,7 +26,7 @@ public class TaskService {
     public TaskModel getTaskById(UUID id){
         var task = repository.findById(id);
         if(task.isEmpty()){
-            throw new NoSuchElementException(String.format("The Task with the id %b doesn't exists", id));
+            throw new NoSuchElementException(String.format("The Task with the id %s doesn't exists", id));
         }
         return task.get();
     }
@@ -51,7 +51,7 @@ public class TaskService {
         var taskToUpdate = repository.findById(taskId);
 
         if(taskToUpdate.isEmpty()){
-            throw new NoSuchElementException(String.format("Task with id %b doesn't exists", taskId));
+            throw new NoSuchElementException(String.format("Task with id %s doesn't exists", taskId));
         }
 
         var newTask = taskToUpdate.get();
@@ -69,7 +69,7 @@ public class TaskService {
 
     public void deleteTaskById(UUID id){
         if(repository.findById(id).isEmpty()){
-            throw new NoSuchElementException(String.format("Task with id %b doesn't exists", id));
+            throw new NoSuchElementException(String.format("Task with id %s doesn't exists", id));
         }
         repository.deleteById(id);
     }
