@@ -39,18 +39,8 @@ public class TaskService {
         return repository.findAllByIsCompleted(isCompleted);
     }
 
-    public TaskModel createTask(TaskModel task){
-        if(repository.findById(task.getId()).isPresent()){
-            throw new RestClientResponseException(
-                        String.format("Task with ID %b already exists", task.getId()),
-                        HttpStatus.BAD_REQUEST,
-                        HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                        null,
-                        null,
-                        null
-                    );
-        }
-        return repository.save(task);
+    public TaskModel createTask(TaskDTO task){
+        return repository.save(new TaskModel(task.getDescription(), task.getIsCompleted()));
     }
 
     public TaskModel updateTask(TaskDTO task, UUID taskId){
