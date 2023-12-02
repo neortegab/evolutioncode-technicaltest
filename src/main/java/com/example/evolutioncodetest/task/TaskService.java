@@ -1,7 +1,9 @@
 package com.example.evolutioncodetest.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientResponseException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -38,6 +40,10 @@ public class TaskService {
     }
 
     public TaskModel createTask(TaskDTO task){
+        if(task.getDescription() == null || task.getDescription().isEmpty()){
+            throw new RestClientResponseException("Task description can't be empty", HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
+        }
+
         return repository.save(new TaskModel(task.getDescription(), task.getIsCompleted()));
     }
 
