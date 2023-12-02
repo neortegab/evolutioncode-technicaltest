@@ -96,17 +96,21 @@ public class ServiceTest {
         var randomId = UUID.randomUUID();
 
         Mockito.when(repository.findById(randomId)).thenReturn(Optional.empty());
-        assertThatThrownBy(() -> service.updateTask(new TaskModel(randomId, "desc", false)))
+        assertThatThrownBy(() -> service.updateTask(new TaskDTO(), randomId))
                 .as("Update task should throw a NoSuchElementException if the ID doesn't exists")
                 .isInstanceOf(NoSuchElementException.class);
 
-        var updatedTask = new TaskModel(randomId, "desc", true);
+        var updatedTask = new TaskDTO();
+        updatedTask.setDescription("desc");
+        updatedTask.setIsCompleted(true);
 
-        Mockito.when(repository.findById(randomId)).thenReturn(Optional.of(new TaskModel(randomId, "desc", false)));
-        Mockito.when(repository.save(updatedTask)).thenReturn(updatedTask);
-        assertThat(service.updateTask(updatedTask))
+        var oldTask = new TaskModel(randomId, "desc", false);
+
+        Mockito.when(repository.findById(randomId)).thenReturn(Optional.of(oldTask));
+        Mockito.when(repository.save(oldTask)).thenReturn(new TaskModel(randomId, "desc", true));
+        assertThat(service.updateTask(updatedTask, randomId))
                 .as("Update task should update the task when the task id is found")
-                .isNotNull().isInstanceOf(TaskModel.class).isEqualTo(updatedTask);
+                .isNotNull().isInstanceOf(TaskModel.class).isEqualTo(new TaskModel(randomId, "desc", true));
     }
 
     @Test
