@@ -18,18 +18,22 @@ public class TaskController {
     }
 
     @GetMapping
-    public @ResponseBody List<TaskModel> getAllTasks(){
+    public @ResponseBody List<TaskModel> getTasks(@RequestParam(name = "desc", required = false) String description,
+                                                  @RequestParam(required = false) Boolean status){
+        if (description != null && !description.isEmpty()) {
+            return service.getTaskByDescription(description);
+        }
+
+        if (status != null) {
+            return service.getTaskByStatus(status);
+        }
+
         return service.getAllTasks();
     }
 
-    @GetMapping
-    public @ResponseBody List<TaskModel> getAllTasksWithDescription(@RequestParam(name = "desc", required = true) String description){
-        return service.getTaskByDescription(description);
-    }
-
-    @GetMapping
-    public @ResponseBody List<TaskModel> getAllTasksWithStatus(@RequestParam boolean status){
-        return service.getTaskByStatus(status);
+    @GetMapping("{id}")
+    public @ResponseBody TaskModel getTaskById(@PathVariable UUID id){
+        return service.getTaskById(id);
     }
 
     @PostMapping
