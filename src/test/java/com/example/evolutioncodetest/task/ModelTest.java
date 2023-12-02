@@ -34,6 +34,6 @@ public class ModelTest {
 
         assertThat(TaskModel.class.getDeclaredField("isCompleted").getType().getTypeName())
                 .as("Task model status should be of type boolean")
-                .isEqualTo("boolean");
+                .isEqualTo("java.lang.Boolean");
     }
 }

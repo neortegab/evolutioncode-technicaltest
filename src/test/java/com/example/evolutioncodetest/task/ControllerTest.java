@@ -67,14 +67,10 @@ public class ControllerTest {
                 .andExpect(jsonPath("$")
                         .isArray())
                 .andExpectAll(
-                        jsonPath("$[0].description").isString(),
                         jsonPath("$[0].description").value("desc1"),
-                        jsonPath("$[0].completed").isBoolean(),
-                        jsonPath("$[0].completed").value(false),
-                        jsonPath("$[1].description").isString(),
+                        jsonPath("$[0].isCompleted").value(false),
                         jsonPath("$[1].description").value("desc2"),
-                        jsonPath("$[1].completed").isBoolean(),
-                        jsonPath("$[1].completed").value(true)
+                        jsonPath("$[1].isCompleted").value(true)
                 );
     }
 
@@ -125,7 +121,7 @@ public class ControllerTest {
                         jsonPath("$.id").isNotEmpty(),
                         jsonPath("$.id").isString(),
                         jsonPath("$.description").value("test description"),
-                        jsonPath("$.completed").value(false)
+                        jsonPath("$.isCompleted").value(false)
                 );
     }
 
