@@ -53,11 +53,24 @@ public class TaskService {
         return repository.save(task);
     }
 
-    public TaskModel updateTask(TaskModel task){
-        if(repository.findById(task.getId()).isEmpty()){
-            throw new NoSuchElementException(String.format("Task with id %b doesn't exists", task.getId()));
+    public TaskModel updateTask(TaskDTO task, UUID taskId){
+        var taskToUpdate = repository.findById(taskId);
+
+        if(taskToUpdate.isEmpty()){
+            throw new NoSuchElementException(String.format("Task with id %b doesn't exists", taskId));
         }
-        return repository.save(task);
+
+        var newTask = taskToUpdate.get();
+
+        if (task.getDescription() != null && !task.getDescription().isEmpty()) {
+            newTask.setDescription(task.getDescription());
+        }
+
+        if(task.getIsCompleted() != null){
+            newTask.setCompleted(task.getIsCompleted());
+        }
+
+        return repository.save(newTask);
     }
 
     public void deleteTaskById(UUID id){
