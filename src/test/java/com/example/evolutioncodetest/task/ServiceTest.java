@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.web.client.RestClientResponseException;
 
 import java.util.*;
 
@@ -78,17 +77,19 @@ public class ServiceTest {
     @Test
     void testCreate() {
         var randomId = UUID.randomUUID();
-        Mockito.when(repository.findById(randomId)).thenReturn(Optional.of(new TaskModel()));
-        assertThatThrownBy(() -> service.createTask(new TaskModel(randomId, "desc", false)))
-                .as("Create task should throw a RestClientResponseException if the ID already exists")
-                .isInstanceOf(RestClientResponseException.class);
 
-        Mockito.when(repository.findById(randomId)).thenReturn(Optional.empty());
-        var createdTask = new TaskModel();
-        Mockito.when(repository.save(createdTask)).thenReturn(createdTask);
+        var createdTask = new TaskDTO();
+        createdTask.setDescription("desc");
+
+        var entityTask = new TaskModel();
+        entityTask.setId(randomId);
+        entityTask.setDescription(createdTask.getDescription());
+        entityTask.setCompleted(createdTask.getIsCompleted());
+
+        Mockito.when(repository.save(any())).thenReturn(entityTask);
         assertThat(service.createTask(createdTask))
-                .as("Create task should create the task when task id not found")
-                .isNotNull().isInstanceOf(TaskModel.class).isEqualTo(createdTask);
+                .as("Create task should create a new task")
+                .isNotNull().isInstanceOf(TaskModel.class).isEqualTo(entityTask);
     }
 
     @Test
