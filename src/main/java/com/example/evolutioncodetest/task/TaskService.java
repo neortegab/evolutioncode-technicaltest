@@ -47,7 +47,7 @@ public class TaskService {
         return repository.save(new TaskModel(task.getDescription(), task.getIsCompleted()));
     }
 
-    public TaskModel updateTask(TaskDTO task, UUID taskId){
+    public TaskModel updateTask(TaskDTO updateBody, UUID taskId){
         var taskToUpdate = repository.findById(taskId);
 
         if(taskToUpdate.isEmpty()){
@@ -56,12 +56,12 @@ public class TaskService {
 
         var newTask = taskToUpdate.get();
 
-        if (task.getDescription() != null && !task.getDescription().isEmpty()) {
-            newTask.setDescription(task.getDescription());
+        if (updateBody.getDescription() != null && !updateBody.getDescription().isEmpty()) {
+            newTask.setDescription(updateBody.getDescription());
         }
 
-        if(task.getIsCompleted() != null){
-            newTask.setCompleted(task.getIsCompleted());
+        if(updateBody.getIsCompleted() != null){
+            newTask.setCompleted(updateBody.getIsCompleted());
         }
 
         return repository.save(newTask);
