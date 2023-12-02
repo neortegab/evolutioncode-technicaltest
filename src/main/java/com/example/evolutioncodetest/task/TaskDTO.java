@@ -6,5 +6,5 @@ import lombok.Data;
 public class TaskDTO {
     private String description;
 
-    private boolean isCompleted;
+    private Boolean isCompleted = false;
 }
