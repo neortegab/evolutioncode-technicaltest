@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -18,14 +19,14 @@ public class TaskController {
     }
 
     @GetMapping
-    public @ResponseBody List<TaskModel> getTasks(@RequestParam(name = "desc", required = false) String description,
-                                                  @RequestParam(required = false) Boolean status){
-        if (description != null && !description.isEmpty()) {
-            return service.getTaskByDescription(description);
+    public @ResponseBody List<TaskModel> getTasks(@RequestParam Optional<String> description,
+                                                  @RequestParam Optional<Boolean> completed){
+        if (description.isPresent()) {
+            return service.getTaskByDescription(description.get());
         }
 
-        if (status != null) {
-            return service.getTaskByStatus(status);
+        if (completed.isPresent()) {
+            return service.getTaskByStatus(completed.get());
         }
 
         return service.getAllTasks();
@@ -37,7 +38,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public @ResponseBody TaskModel createTask(@RequestBody TaskModel task){
+    public @ResponseBody TaskModel createTask(@RequestBody TaskDTO task){
         return service.createTask(task);
     }
 
