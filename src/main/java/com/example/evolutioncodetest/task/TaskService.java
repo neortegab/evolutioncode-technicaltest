@@ -1,9 +1,7 @@
 package com.example.evolutioncodetest.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientResponseException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -35,8 +33,8 @@ public class TaskService {
         return repository.findByDescriptionContains(description);
     }
 
-    public List<TaskModel> getTaskByStatus(boolean isCompleted){
-        return repository.findAllByIsCompleted(isCompleted);
+    public List<TaskModel> getTaskByCompletedStatus(boolean completed){
+        return repository.findAllByIsCompleted(completed);
     }
 
     public TaskModel createTask(TaskDTO task){

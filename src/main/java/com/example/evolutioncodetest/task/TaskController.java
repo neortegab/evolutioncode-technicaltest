@@ -26,7 +26,7 @@ public class TaskController {
         }
 
         if (completed.isPresent()) {
-            return service.getTaskByStatus(completed.get());
+            return service.getTaskByCompletedStatus(completed.get());
         }
 
         return service.getAllTasks();
