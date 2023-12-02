@@ -42,12 +42,12 @@ public class TaskController {
         return service.createTask(task);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public @ResponseBody TaskModel updateTask(@RequestBody TaskDTO task, @PathVariable UUID id){
         return service.updateTask(task, id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public void deleteTask(@PathVariable UUID id){
         service.deleteTaskById(id);
     }
