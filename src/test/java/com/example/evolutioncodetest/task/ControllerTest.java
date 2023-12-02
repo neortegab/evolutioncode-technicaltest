@@ -11,14 +11,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.client.RestClientResponseException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -33,11 +31,13 @@ public class ControllerTest {
     @MockBean
     TaskService service;
 
+
     @BeforeEach
     void setup(){
         this.mockMvc = MockMvcBuilders.standaloneSetup(new TaskController(service))
                 .setControllerAdvice(ControllerAdvisor.class)
                 .build();
+
     }
 
     @Test
@@ -79,6 +79,24 @@ public class ControllerTest {
     }
 
     @Test
+    void testGetById() throws Exception{
+        var task = new TaskModel();
+        task.setId(UUID.randomUUID());
+        task.setDescription("description1");
+        task.setCompleted(true);
+
+        when(service.getTaskById(task.getId())).thenReturn(task);
+        mockMvc.perform(
+                get("/tasks/{taskId}", task.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpectAll(
+                   status().isOk()
+                );
+    }
+
+    @Test
     void testCreateTask() throws Exception{
         var taskDto = new TaskDTO();
         taskDto.setDescription("test description");
@@ -111,4 +129,35 @@ public class ControllerTest {
                 );
     }
 
+    @Test
+    void testUpdateTask() throws Exception{
+        var taskId = UUID.randomUUID();
+
+        var taskDto = new TaskDTO();
+        taskDto.setDescription("test description");
+        taskDto.setIsCompleted(true);
+
+        var taskModel = new TaskModel();
+        taskModel.setDescription("old description");
+        taskModel.setCompleted(false);
+        taskModel.setId(taskId);
+
+        var mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+
+        var writer = mapper.writer().withDefaultPrettyPrinter();
+        var requestJson = writer.writeValueAsString(taskDto);
+
+        when(service.createTask(taskDto)).thenReturn(taskModel);
+        mockMvc.perform(
+                        put("/tasks/{id}", taskId)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestJson)
+                )
+                .andDo(print())
+                .andExpectAll(
+                        status().isOk()
+                );
+    }
 }
