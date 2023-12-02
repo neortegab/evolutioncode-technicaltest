@@ -22,8 +22,7 @@ public class TaskModel {
     @Nonnull
     private String description;
 
-    @Nonnull
-    private boolean isCompleted = false;
+    private Boolean isCompleted = false;
 
     public TaskModel(String description){
         this.id = UUID.randomUUID();

@@ -83,7 +83,7 @@ public class ControllerTest {
         var task = new TaskModel();
         task.setId(UUID.randomUUID());
         task.setDescription("description1");
-        task.setCompleted(true);
+        task.setIsCompleted(true);
 
         when(service.getTaskById(task.getId())).thenReturn(task);
         mockMvc.perform(
@@ -103,7 +103,7 @@ public class ControllerTest {
 
         var taskModel = new TaskModel();
         taskModel.setDescription(taskDto.getDescription());
-        taskModel.setCompleted(false);
+        taskModel.setIsCompleted(false);
         taskModel.setId(UUID.randomUUID());
 
         var mapper = new ObjectMapper();
@@ -139,7 +139,7 @@ public class ControllerTest {
 
         var taskModel = new TaskModel();
         taskModel.setDescription("old description");
-        taskModel.setCompleted(false);
+        taskModel.setIsCompleted(false);
         taskModel.setId(taskId);
 
         var mapper = new ObjectMapper();
