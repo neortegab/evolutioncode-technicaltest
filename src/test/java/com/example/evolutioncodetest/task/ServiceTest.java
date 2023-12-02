@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.client.RestClientResponseException;
 
 import java.util.*;
 
@@ -33,7 +34,7 @@ public class ServiceTest {
 
     @Test
     void testFindAll() {
-        Mockito.when(repository.findAll()).thenReturn(new ArrayList<TaskModel>());
+        Mockito.when(repository.findAll()).thenReturn(new ArrayList<>());
         assertThat(service.getAllTasks())
                 .as("Get all tasks should return an empty list when there is no tasks added")
                 .isEmpty();
@@ -77,6 +78,13 @@ public class ServiceTest {
     @Test
     void testCreate() {
         var randomId = UUID.randomUUID();
+
+        var emptyEntityTask = new TaskModel();
+
+        Mockito.when(repository.save(any())).thenReturn(emptyEntityTask);
+        assertThatThrownBy(() -> service.createTask(new TaskDTO()))
+                .as("Task create should throw a RestClientResponseException when creating a task with an empty description")
+                .isInstanceOf(RestClientResponseException.class);
 
         var createdTask = new TaskDTO();
         createdTask.setDescription("desc");
