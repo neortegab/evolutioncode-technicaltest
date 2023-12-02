@@ -30,12 +30,12 @@ public class TaskModel {
         this.isCompleted = false;
     }
 
-    public TaskModel(String description, boolean isCompleted){
+    public TaskModel(String description, Boolean isCompleted){
         this.description = description;
         this.isCompleted = isCompleted;
     }
 
-    public TaskModel(UUID id, String description, boolean isCompleted){
+    public TaskModel(UUID id, String description, Boolean isCompleted){
         this.id = id;
         this.description = description;
         this.isCompleted = isCompleted;

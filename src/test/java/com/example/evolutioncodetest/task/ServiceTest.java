@@ -92,7 +92,7 @@ public class ServiceTest {
         var entityTask = new TaskModel();
         entityTask.setId(randomId);
         entityTask.setDescription(createdTask.getDescription());
-        entityTask.setCompleted(createdTask.getIsCompleted());
+        entityTask.setIsCompleted(createdTask.getIsCompleted());
 
         Mockito.when(repository.save(any())).thenReturn(entityTask);
         assertThat(service.createTask(createdTask))

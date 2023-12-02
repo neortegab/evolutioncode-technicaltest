@@ -11,6 +11,6 @@ public interface TaskRepository extends JpaRepository<TaskModel, UUID> {
 
     List<TaskModel> findByDescriptionContains(String description);
 
-    List<TaskModel> findAllByIsCompleted(boolean isCompleted);
+    List<TaskModel> findAllByIsCompleted(Boolean isCompleted);
 
 }

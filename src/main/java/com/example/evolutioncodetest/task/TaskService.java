@@ -61,7 +61,7 @@ public class TaskService {
         }
 
         if(updateBody.getIsCompleted() != null){
-            newTask.setCompleted(updateBody.getIsCompleted());
+            newTask.setIsCompleted(updateBody.getIsCompleted());
         }
 
         return repository.save(newTask);

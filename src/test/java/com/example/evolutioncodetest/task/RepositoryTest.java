@@ -74,6 +74,6 @@ public class RepositoryTest {
                 .as("Task Repository findAllByIsCompleted method should return only the elements that match")
                 .hasSize(3)
                 .hasOnlyElementsOfType(TaskModel.class)
-                .allMatch(TaskModel::isCompleted);
+                .allMatch(TaskModel::getIsCompleted);
     }
 }
